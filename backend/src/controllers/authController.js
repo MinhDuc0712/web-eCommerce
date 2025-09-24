@@ -19,11 +19,12 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: "Email đã tồn tại" });
     }
 
-    const user = await User.create({ username, email, password });
+    const user = await User.create({ username, email, password, role });
     res.status(201).json({
       _id: user._id,
       username: user.username,
       email: user.email,
+      role: user.role,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -43,6 +44,7 @@ export const loginUser = async (req, res) => {
         _id: user._id,
         username: user.username,
         email: user.email,
+        role:user.role,
         token: generateToken(user._id),
       });
     } else {
